@@ -31,7 +31,7 @@ function getRandomImage(){
 //Getting elements from html
 const imageContainer = document.getElementById('image-container');
 const resultContainer = document.getElementById('results');
-let resultsButton = document.getElementById('results-button')
+let resultsButton = document.getElementById('results-button');
 //Making an image for every name in the product name array
 let img_one = document.querySelector('#image-container img:first-child');
 let img_two = document.querySelector('#image-container img:nth-child(2)');
