@@ -1,19 +1,29 @@
 'use strict'
-// Array to hold all product objects
-let allPossibleImages = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulu.jpg','dog-duck.jpg','dragon.jpg','pen.jpg','pet-sweep.jpg','scissors.jpg','shark.jpg','tauntaun.jpg','unicorn.jpg','water-can.jpg','wine-glass.jpg'];
+let allClicks = [];
+
 let allProducts = [];
 // Array to hold all product names
-let productNames = ['bag', 'banana', 'bathroom', 'boots', 'dragon'];
+let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast','bubblegum','chair','cthulu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
 let maxClicks = 25;
 let totalClicks = 0;
+
+
+//while(PicA === PicB || PicB === PicC || PicB === PicA){
+//    PicB = productNames[rando];
+//    PicC = productNames[rando];
+//}
+//console.log(PicA);
+//console.log(PicB);
+//console.log(PicC);
+
 // Create a constructor function that creates an object associated with 
 // each product, and has the following properties:
-function Product(name,path){
+function Product(name){
     // Name of the product
     // File path of image
     // Times the image has been shown
     this.name = name;
-    this.path = path;
+    this.path = `./assets/${name}.jpeg`;
     this.timesShown = 0;
     this.timesClicked = 0;
     this.trackClicks = function(event){
@@ -21,87 +31,76 @@ function Product(name,path){
     }
     allProducts.push(this);
 }
-
+// COMMENTING OUT TO TRY NEW RANDOM PIC METHOD
 //Create an algorithm that will randomly generate three unique product images from the 
 //images directory and display them side-by-side-by-side in the browser window.
 function getRandomImage(){
     //Math.random gives me a whole number
-    console.log(Math.floor(Math.random()*allPossibleImages.length));
+    let rando = (Math.floor(Math.random()*productNames.length));
+    let PicA = productNames[rando];
+    let PicB = productNames[rando];
+    let PicC = productNames[rando];
+    while(PicA === PicB || PicB === PicC || PicB === PicA){
+            PicB = productNames[rando];
+            PicC = productNames[rando];
+        }
+    return (PicA, PicB, PicC);
 }
+
+//getRandomImage();
+
 //Getting elements from html
 const imageContainer = document.getElementById('image-container');
 const resultContainer = document.getElementById('results');
 let resultsButton = document.getElementById('results-button');
+let card1 = document.getElementById('item1');
+let card2 = document.getElementById('item2');
+let card3 = document.getElementById('item3');
 //Making an image for every name in the product name array
-let img_one = document.querySelector('#image-container img:first-child');
-let img_two = document.querySelector('#image-container img:nth-child(2)');
-let img_three = document.querySelector('#image-container img:nth-child(3)');
-let img_four = document.querySelector('#image-container img:nth-child(4)');
-let img_five = document.querySelector('#image-container img:nth-child(5)');
 
 // Instance variables --> Objects
-let bag = new Product('bag','./assets/bag.jpg');
-let banana = new Product('banana','./assets/banana.jpg');
-let bathroom = new Product('bathroom','./assets/bathroom.jpg');
-let boots = new Product('boots','./assets/boots.jpg');
-let dragon = new Product('dragon','./assets/dragon.jpg');
+let item1 = new Product(PicA);
+let item2 = new Product(PicB);
+let item3 = new Product(PicC);
 
-function constructImages(){
+
+function newFunction(PicA, PicB, PicC) {
+    return PicA, PicB, PicC;
+}
+
+function constructImages(item){
     //let bag0 = new Product(productNames[0],'./assets'+productNames[0]+'.jpg');
     //Adding path to image / Adding path attribute
-    img_one.setAttribute('src',bag.path);
-    img_one.setAttribute('alt',bag.name);
-    img_two.setAttribute('src',banana.path);
-    img_two.setAttribute('alt',banana.name);
-    img_three.setAttribute('src',bathroom.path);
-    img_three.setAttribute('alt',bathroom.name);
-    img_four.setAttribute('src',boots.path);
-    img_four.setAttribute('alt',boots.name);
-    img_five.setAttribute('src',dragon.path);
-    img_five.setAttribute('alt',dragon.name);
-
-    img_one.addEventListener('click',function(){trackClicks(bag)});
-    img_two.addEventListener('click',function(){trackClicks(banana)});
-    img_three.addEventListener('click',function(){trackClicks(bathroom)});
-    img_four.addEventListener('click',function(){trackClicks(boots)});
-    img_five.addEventListener('click',function(){trackClicks(dragon)});
-    timesShown(bag);
-    timesShown(banana);
-    timesShown(bathroom);
-    timesShown(boots);
-    timesShown(dragon);
+    card1.setAttribute('src',item1.path);
+    card1.setAttribute('alt',item1.name);
+    card2.setAttribute('src',item2.path);
+    card2.setAttribute('alt',item2.name);
+    card3.setAttribute('src',item3.path);
+    card3.setAttribute('alt',item3.name);
+    
+    card1.addEventListener('click',function(){trackClicks(card1)});
+    card2.addEventListener('click',function(){trackClicks(card2)});
+    card3.addEventListener('click',function(){trackClicks(card3)});
+    timesShown(item1);
+    timesShown(item2);
+    timesShown(item3);
     
 }
 
-// Function to display random images
-function displayRandomImage(product){
-    // This function needs the randomizer algorithm
-
-}
 // Function to show how many times an image was shown
 function timesShown(product){
     // See if image is there
-    if (product.name === img_one.alt){
+    if (product.name === item1.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
     }
-    else if (product.name === img_two.alt){
+    else if (product.name === item2.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
     }
-    else if (product.name === img_three.alt){
-        console.log(`The ${product.name} is on the page.`);
-        product.timesShown++;
-        console.log(product.timesShown);
-    }
-    else if (product.name === img_four.alt){
-        console.log(`The ${product.name} is on the page.`);
-        product.timesShown++;
-        console.log(product.timesShown);
-    }
-    else if (product.name === img_five.alt){
+    else if (product.name === item3.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
@@ -143,5 +142,77 @@ function showResults(){
     displayResults(allProducts);
 }
 
-constructImages(allProducts);
+constructImages(item1);
+constructImages(item2);
+constructImages(item3);
 
+
+//Adding chart
+resultsButton.addEventListener('click', function () {
+
+    alert('Great Work!');
+    // Pull in canvas element from html
+    let canvas = document.getElementById('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    //My chart (that I took)!
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: allProducts, //Pass array to our label data
+            datasets: [{
+                label: '# of Clicks',
+                data: allClicks, // Has to match label data
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+            //New code from class --Start here
+            {
+                label: '# of views',
+                data: timesShown,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }
+                // --End here 
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+})
