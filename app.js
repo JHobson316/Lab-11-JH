@@ -148,7 +148,8 @@ timesShown(item3);
 function storage(){
 for (let i = 0; i< allProducts.length; i++){
     //Stringifying each object in allProducts
-    let user_string = JSON.stringify(allProducts[i]);
+    let product_string = JSON.stringify(allProducts[i]);
+    JSON.parse(product_string);
     //Setting items into local storage
     localStorage.setItem(`Name: ${i}`, allProducts[i].name);
     localStorage.setItem(`Path: ${i}`, allProducts[i].path);
