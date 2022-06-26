@@ -3,18 +3,18 @@ let allClicks = [];
 
 let allProducts = [];
 // Array to hold all product names
-let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast','bubblegum','chair','cthulu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass'];
+let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','sweep','tauntaun','unicorn','water-can','wine-glass'];
 let maxClicks = 25;
 let totalClicks = 0;
 
+let PicA = productNames[(Math.floor(Math.random()*productNames.length))];
+let PicB = productNames[(Math.floor(Math.random()*productNames.length))];
+let PicC = productNames[(Math.floor(Math.random()*productNames.length))];
 
-//while(PicA === PicB || PicB === PicC || PicB === PicA){
-//    PicB = productNames[rando];
-//    PicC = productNames[rando];
-//}
-//console.log(PicA);
-//console.log(PicB);
-//console.log(PicC);
+while(PicA === PicB || PicB === PicC || PicB === PicA){
+    PicB = productNames[rando];
+    PicC = productNames[rando];
+}
 
 // Create a constructor function that creates an object associated with 
 // each product, and has the following properties:
@@ -23,7 +23,7 @@ function Product(name){
     // File path of image
     // Times the image has been shown
     this.name = name;
-    this.path = `./assets/${name}.jpeg`;
+    this.path = `./assets/${name}.jpg`;
     this.timesShown = 0;
     this.timesClicked = 0;
     this.trackClicks = function(event){
@@ -34,18 +34,17 @@ function Product(name){
 // COMMENTING OUT TO TRY NEW RANDOM PIC METHOD
 //Create an algorithm that will randomly generate three unique product images from the 
 //images directory and display them side-by-side-by-side in the browser window.
-function getRandomImage(){
+//function getRandomImage(){
     //Math.random gives me a whole number
-    let rando = (Math.floor(Math.random()*productNames.length));
-    let PicA = productNames[rando];
-    let PicB = productNames[rando];
-    let PicC = productNames[rando];
-    while(PicA === PicB || PicB === PicC || PicB === PicA){
-            PicB = productNames[rando];
-            PicC = productNames[rando];
-        }
-    return (PicA, PicB, PicC);
-}
+//    let PicA = productNames[(Math.floor(Math.random()*productNames.length))];
+//    let PicB = productNames[(Math.floor(Math.random()*productNames.length))];
+//    let PicC = productNames[(Math.floor(Math.random()*productNames.length))];
+//    while(PicA === PicB || PicB === PicC || PicB === PicA){
+//            PicB = productNames[(Math.floor(Math.random()*productNames.length))];
+//            PicC = productNames[(Math.floor(Math.random()*productNames.length))];
+//        }
+//    return (PicA, PicB, PicC);
+//}
 
 //getRandomImage();
 
@@ -62,11 +61,7 @@ let card3 = document.getElementById('item3');
 let item1 = new Product(PicA);
 let item2 = new Product(PicB);
 let item3 = new Product(PicC);
-
-
-function newFunction(PicA, PicB, PicC) {
-    return PicA, PicB, PicC;
-}
+console.log(allProducts);
 
 function constructImages(item){
     //let bag0 = new Product(productNames[0],'./assets'+productNames[0]+'.jpg');
@@ -78,29 +73,27 @@ function constructImages(item){
     card3.setAttribute('src',item3.path);
     card3.setAttribute('alt',item3.name);
     
-    card1.addEventListener('click',function(){trackClicks(card1)});
-    card2.addEventListener('click',function(){trackClicks(card2)});
-    card3.addEventListener('click',function(){trackClicks(card3)});
-    timesShown(item1);
-    timesShown(item2);
-    timesShown(item3);
-    
+
 }
+// Adding event listeners to each card
+card1.addEventListener('click',function(){trackClicks(item1)});
+card2.addEventListener('click',function(){trackClicks(item2)});
+card3.addEventListener('click',function(){trackClicks(item3)});
 
 // Function to show how many times an image was shown
 function timesShown(product){
     // See if image is there
-    if (product.name === item1.alt){
+    if (product.name == card1.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
     }
-    else if (product.name === item2.alt){
+    else if (product.name == card2.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
     }
-    else if (product.name === item3.alt){
+    else if (product.name == card3.alt){
         console.log(`The ${product.name} is on the page.`);
         product.timesShown++;
         console.log(product.timesShown);
@@ -122,6 +115,7 @@ function trackClicks(product){
     // That too many clicks have been used on the products
     else{
         alert ('Too many clicks');
+        storage();
     }
 }
 // Function to display the results of the clicks
@@ -141,19 +135,34 @@ function displayResults(productArray){
 function showResults(){
     displayResults(allProducts);
 }
-
+//Constructing each image
 constructImages(item1);
 constructImages(item2);
 constructImages(item3);
+//Running timesShown for each of the three 
+timesShown(item1);
+timesShown(item2);
+timesShown(item3);
 
+// Inserting Local Storage
+function storage(){
+for (let i = 0; i< allProducts.length; i++){
+    //Stringifying each object in allProducts
+    let user_string = JSON.stringify(allProducts[i]);
+    //Setting items into local storage
+    localStorage.setItem(`Name: ${i}`, allProducts[i].name);
+    localStorage.setItem(`Path: ${i}`, allProducts[i].path);
+    localStorage.setItem(`Times Clicked: ${i}`, allProducts[i].timesClicked);
+    localStorage.setItem(`Times Shown: ${i}`, allProducts[i].timesShown);
+}
+}
 
 //Adding chart
-resultsButton.addEventListener('click', function () {
+resultsButton.addEventListener('click', function() {
 
     alert('Great Work!');
     // Pull in canvas element from html
     let canvas = document.getElementById('canvas');
-
     const ctx = canvas.getContext('2d');
 
     //My chart (that I took)!
