@@ -1,13 +1,18 @@
 'use strict'
-alert('Please vote for any of the three products by clicking on the respective image. You have 25 votes in total and each click counts as 1 vote.')
+alert('Please vote for any of the three products by clicking on the respective image. You have 25 votes in total and each click counts as 1 vote.');
+// Array to hold all times a product was clicked
 let allClicks = [];
+// Array to hold all times a product was shown
 let allShows = [];
+// Array to hold all products created
 let allProducts = [];
 // Array to hold all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','sweep','tauntaun','unicorn','water-can','wine-glass'];
 let maxClicks = 25;
 let totalClicks = 0;
 
+//Create an algorithm that will randomly generate three unique product images from the 
+//images directory and display them side-by-side-by-side in the browser window.
 let PicA = productNames[(Math.floor(Math.random()*productNames.length))];
 let PicB = productNames[(Math.floor(Math.random()*productNames.length))];
 let PicC = productNames[(Math.floor(Math.random()*productNames.length))];
@@ -33,8 +38,7 @@ function Product(name){
     allProducts.push(this);
 }
 // COMMENTING OUT TO TRY NEW RANDOM PIC METHOD
-//Create an algorithm that will randomly generate three unique product images from the 
-//images directory and display them side-by-side-by-side in the browser window.
+
 //function getRandomImage(){
     //Math.random gives me a whole number
 //    let PicA = productNames[(Math.floor(Math.random()*productNames.length))];
