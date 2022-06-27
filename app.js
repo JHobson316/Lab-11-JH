@@ -1,6 +1,7 @@
 'use strict'
+alert('Please vote for any of the three products by clicking on the respective image. You have 25 votes in total and each click counts as 1 vote.')
 let allClicks = [];
-
+let allShows = [];
 let allProducts = [];
 // Array to hold all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','sweep','tauntaun','unicorn','water-can','wine-glass'];
@@ -12,8 +13,8 @@ let PicB = productNames[(Math.floor(Math.random()*productNames.length))];
 let PicC = productNames[(Math.floor(Math.random()*productNames.length))];
 
 while(PicA === PicB || PicB === PicC || PicB === PicA){
-    PicB = productNames[rando];
-    PicC = productNames[rando];
+    PicB = productNames[(Math.floor(Math.random()*productNames.length))];
+    PicC = productNames[(Math.floor(Math.random()*productNames.length))];
 }
 
 // Create a constructor function that creates an object associated with 
@@ -115,6 +116,9 @@ function trackClicks(product){
     // That too many clicks have been used on the products
     else{
         alert ('Too many clicks');
+        allClicks.push(item1.timesClicked, item2.timesClicked, item3.timesClicked);
+        allShows.push(item1.timesShown,item2.timesShown,item3.timesShown);
+        console.log(allClicks);
         storage();
     }
 }
@@ -123,8 +127,8 @@ function displayResults(productArray){
     for (let i = 0; i < productArray.length; i++){
         // Grabs from the array of initialized products
         let product = productArray[i];
-        let resultMessage = `This product was clicked ${product.timesClicked} times.
-        This product was shown ${product.timesShown} times.
+        let resultMessage = `This product was clicked ${product.timesClicked} time(s).
+        This product was shown ${product.timesShown} time(s).
         The name of this product is ${product.name}.
         The path to the product's image is ${product.path}.`;
         let p = document.createElement('p');
@@ -159,9 +163,10 @@ for (let i = 0; i< allProducts.length; i++){
 }
 
 //Adding chart
-resultsButton.addEventListener('click', function() {
+function getResults(){
+resultsButton.addEventListener('click', function(){
 
-    alert('Great Work!');
+    alert('Thank you for voting!');
     // Pull in canvas element from html
     let canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -195,8 +200,8 @@ resultsButton.addEventListener('click', function() {
             //New code from class --Start here
             {
                 label: '# of views',
-                data: timesShown,
-                backgroundColor: [
+                data: allShows,
+               backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
@@ -225,4 +230,4 @@ resultsButton.addEventListener('click', function() {
             }
         }
     });
-})
+})}
